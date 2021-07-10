@@ -15,14 +15,16 @@ import bpy
 from bpy.types import Panel, Operator
 
 bl_info = {
-    "name": "material_quick_override",
+    "name": "Material Quick Override",
     "author": "Kei MURATAGAWA",
     "description": "",
     "blender": (2, 93, 0),
     "version": (0, 0, 1),
-    "location": "Material",
+    "location": "Material Properties",
     "warning": "",
-    "category": "Generic"
+    "category": "Material"
+    # "wiki_url": "https://github.com/muratagawa/dimensions-per-keyframe/",
+    # "tracker_url": "https://github.com/muratagawa/dimensions-per-keyframe/issues",
 }
 
 
