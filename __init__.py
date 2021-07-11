@@ -4,9 +4,9 @@ from bpy.types import Panel, Operator
 bl_info = {
     "name": "Material Quick Override",
     "author": "Kei MURATAGAWA",
-    "description": "Override materials which is linked with library override.",
+    "description": "Converts a material added by library override to a local material.",
     "blender": (2, 93, 0),
-    "version": (0, 0, 2),
+    "version": (0, 1, 0),
     "location": "Material Properties",
     "warning": "",
     "category": "Material",
@@ -18,7 +18,7 @@ bl_info = {
 class MQO_OT_override_single(Operator):
     bl_idname = "object.material_quick_override_single"
     bl_label = "Active Only"
-    bl_description = "Make active material to be local."
+    bl_description = "Make the active material local."
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
@@ -37,27 +37,28 @@ class MQO_OT_override_single(Operator):
         return {'FINISHED'}
 
 
-# TODO
-# class MQO_OT_override_all(Operator):
-#     bl_idname = "object.material_quick_override_all"
-#     bl_label = "All"
-#     bl_description = "Override all materials."
-#     bl_options = {'REGISTER', 'UNDO'}
+class MQO_OT_override_all(Operator):
+    bl_idname = "object.material_quick_override_all"
+    bl_label = "All"
+    bl_description = "Make all materials in list local."
+    bl_options = {'REGISTER', 'UNDO'}
 
-#     def execute(self, context):
-#         index = context.object.active_material_index
+    def execute(self, context):
+        for name, slot in context.object.material_slots.items():
+            print(slot)
 
-#         # Skip if not library linked material
-#         if context.object.material_slots[index].material.library is None:
-#             self.report({'INFO'}, "This material is not linked with library override. Skipped.")
-#             return {'FINISHED'}
+            # Skip if not library linked material
+            if slot.material.library is None:
+                self.report({'INFO'}, "'%s' is not linked with library override. Skipped." %(name))
+                continue
 
-#         new_mat = context.object.active_material.copy()
-#         context.object.material_slots[index].link = 'OBJECT'
-#         context.object.material_slots[index].material = new_mat
+            new_mat = slot.material.copy()
+            slot.link = 'OBJECT'
+            slot.material = new_mat
 
-#         self.report({'INFO'}, "Material overwritten.")
-#         return {'FINISHED'}
+            self.report({'INFO'}, "Material '%s' overwritten." %(name))
+
+        return {'FINISHED'}
 
 
 class MQO_PT_override(Panel):
@@ -70,13 +71,15 @@ class MQO_PT_override(Panel):
     bl_parent_id = "EEVEE_MATERIAL_PT_context_material"
 
     def draw(self, context):
-        self.layout.operator(MQO_OT_override_single.bl_idname)
+        row = self.layout.row()
+        row.operator(MQO_OT_override_single.bl_idname)
+        row.operator(MQO_OT_override_all.bl_idname)
 
 
 classes = (
     MQO_PT_override,
     MQO_OT_override_single,
-    # MQO_OT_override_all
+    MQO_OT_override_all
 )
 
 
