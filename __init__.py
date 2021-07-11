@@ -35,42 +35,47 @@ class MQO_OT_override(Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        print("Hello World")
+        # TODO store active material information
+        index = context.object.active_material_index
+        new_mat = context.object.active_material.copy()
+
+        context.object.material_slots[index].link = 'OBJECT'
+        context.object.material_slots[index].material = new_mat
+
+        # TODO Skip if not library linked material
+        # bpy.data.materials["kosode"].is_library_indirect
+
+        print(index)
         return {'FINISHED'}
 
 
 class MQO_PT_override(Panel):
-    """Creates a Panel in the Object properties window"""
+    """Creates a Panel in the Material properties window"""
     bl_label = "Quick Material Override"
-    bl_idname = "OBJECT_PT_quickmatoverride"
+    bl_idname = "MATERIAL_PT_quickmatoverride"
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context = "material"
     bl_parent_id = "EEVEE_MATERIAL_PT_context_material"
 
     def draw(self, context):
-        layout = self.layout
-        row = layout.row()
-        row.operator(MQO_OT_override.bl_idname)
+        self.layout.operator(MQO_OT_override.bl_idname)
 
 
-# bpy.context.object.active_material_index = 0
-# bpy.context.object.material_slots[1].link = 'OBJECT'
-# bpy.ops.material.new()
+classes = (
+    MQO_PT_override,
+    MQO_OT_override
+)
 
-# Skip if not library linked material
-# bpy.data.materials["kosode"].is_library_indirect
-
-# bpy.data.object["Tomoe.Body"].active_material_index
 
 def register():
-    bpy.utils.register_class(MQO_PT_override)
-    bpy.utils.register_class(MQO_OT_override)
+    for c in classes:
+        bpy.utils.register_class(c)
 
 
 def unregister():
-    bpy.utils.unregister_class(MQO_PT_override)
-    bpy.utils.unregister_class(MQO_OT_override)
+    for c in classes:
+        bpy.utils.unregister_class(c)
 
 
 if __name__ == "__main__":
