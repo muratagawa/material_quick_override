@@ -1,2 +1,2 @@
-# material_quick_override
-Override materials which is linked with library override.
+# Material Quick Override
+Add "Override Material" button which makes library overrided materials to be local.

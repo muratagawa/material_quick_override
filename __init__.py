@@ -18,7 +18,7 @@ bl_info = {
 class MQO_OT_override_single(Operator):
     bl_idname = "object.material_quick_override_single"
     bl_label = "Active Only"
-    bl_description = "Override active material to be unique."
+    bl_description = "Make active material to be local."
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
