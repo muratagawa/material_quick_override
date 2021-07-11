@@ -17,7 +17,7 @@ from bpy.types import Panel, Operator
 bl_info = {
     "name": "Material Quick Override",
     "author": "Kei MURATAGAWA",
-    "description": "",
+    "description": "Override materials which is linked with library override.",
     "blender": (2, 93, 0),
     "version": (0, 0, 1),
     "location": "Material Properties",
@@ -35,7 +35,6 @@ class MQO_OT_override(Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        # TODO store active material information
         index = context.object.active_material_index
         new_mat = context.object.active_material.copy()
 
