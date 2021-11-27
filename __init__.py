@@ -5,7 +5,7 @@ bl_info = {
     "name": "Material Quick Override",
     "author": "Kei MURATAGAWA",
     "description": "Converts a material added by library override to a local material.",
-    "blender": (2, 93, 0),
+    "blender": (3, 0, 0),
     "version": (0, 1, 0),
     "location": "Material Properties",
     "warning": "",
