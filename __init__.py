@@ -3,14 +3,14 @@ from bpy.types import Panel, Operator
 
 bl_info = {
     "name": "Material Quick Override",
-    "author": "Kei MURATAGAWA",
+    "author": "MURATAGAWA Kei",
     "description": "Converts a material added by library override to a local material.",
-    "blender": (2, 93, 0),
-    "version": (0, 1, 0),
+    "blender": (3, 0, 0),
+    "version": (1, 0, 0),
     "location": "Material Properties",
     "warning": "",
     "category": "Material",
-    "wiki_url": "https://github.com/muratagawa/material_quick_override/",
+    "doc_url": "https://github.com/muratagawa/material_quick_override/",
     "tracker_url": "https://github.com/muratagawa/material_quick_override/issues",
 }
 
@@ -49,14 +49,14 @@ class MQO_OT_override_all(Operator):
 
             # Skip if not library linked material
             if slot.material.library is None:
-                self.report({'INFO'}, "'%s' is not linked with library override. Skipped." %(name))
+                self.report({'INFO'}, "'%s' is not linked with library override. Skipped." % name)
                 continue
 
             new_mat = slot.material.copy()
             slot.link = 'OBJECT'
             slot.material = new_mat
 
-            self.report({'INFO'}, "Material '%s' overwritten." %(name))
+            self.report({'INFO'}, "Material '%s' overwritten." % name)
 
         return {'FINISHED'}
 

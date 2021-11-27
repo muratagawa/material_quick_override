@@ -6,6 +6,12 @@ Material Quick Override
 This add-on adds "Quick Override" buttons that localizes the material added by Library Override.
 
 
+Requirements
+----
+
+* Blender >= 3.0
+
+
 Installation
 ----
 
